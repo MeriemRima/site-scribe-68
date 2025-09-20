@@ -1,13 +1,38 @@
-import React from "react";
-
+import React, { useState } from "react";
+import { supabase } from "../lib/supabaseClient";
+import { useNavigate } from "react-router-dom";
 const Login: React.FC = () => {
+    const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      setError(error.message);
+    } else {
+    navigate("/pages")
+    }
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-600 to-blue-500">
       <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
         <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
           Connexion
         </h1>
-        <form>
+        {error && (
+          <p className="mb-4 text-sm text-red-500 text-center">{error}</p>
+        )}
+        <form onSubmit={handleLogin}>
           <div className="mb-4">
             <label
               htmlFor="email"
@@ -20,6 +45,8 @@ const Login: React.FC = () => {
               id="email"
               placeholder="Entrez votre e-mail"
               className="w-full px-4 py-2 mt-1 text-gray-800 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
@@ -35,6 +62,8 @@ const Login: React.FC = () => {
               id="password"
               placeholder="Entrez votre mot de passe"
               className="w-full px-4 py-2 mt-1 text-gray-800 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>

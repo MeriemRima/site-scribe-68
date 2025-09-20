@@ -1,0 +1,16 @@
+services:
+  app:
+    build: .
+    ports:
+      - "4173:4173"
+    environment:
+      DB_HOST: db.svnthipugajywqxyoexe.supabase.co
+      DB_USER: postgres
+      DB_PASSWORD: WebsiteBuilder2025
+      DB_NAME: postgres
+      DB_PORT: 5432
+   
+
+ 
+
+

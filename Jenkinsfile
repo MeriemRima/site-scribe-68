@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        docker { image 'node:20' } // Node.js 20 image from Docker Hub
+    }
 
     stages {
         stage('Checkout') {
@@ -9,7 +11,7 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-                sh 'npm install' // Use 'bat' for Windows
+                sh 'npm install'
             }
         }
         stage('Run Tests') {
@@ -23,9 +25,10 @@ pipeline {
             }
         }
     }
+
     post {
         always {
-            junit '**/test-results/*.xml' // Adjust if using a different test reporter
+            junit '**/test-results/*.xml' // Make sure your tests generate XML reports
         }
     }
 }

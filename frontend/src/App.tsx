@@ -8,6 +8,7 @@ import Pages from "./pages/Pages";
 import Media from "./pages/Media";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
+import Login from "./pages/login";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,8 @@ const App = () => (
           <Route path="/pages" element={<Pages />} />
           <Route path="/media" element={<Media />} />
           <Route path="/settings" element={<Settings />} />
+           <Route path="/login" element={<Login />} />
+
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
